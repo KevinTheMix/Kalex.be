@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Kalex</title>
+	<meta charset="utf-8">
+	<link rel="icon" type="image/png" href="./favicon.png" />
+	<style type="text/css">
+		* { margin:0; padding: 0; }
+		body { font-size: 12pt; font-family: 'Arial'; background-color: #FFF; }
+		canvas#roll { background-color: #DAD; }
+		ul { position: absolute; top: 40px; list-style-type: none; height: 200px; }
+		ul li { color: white; font-weight: bold; }
+		ul li.title { display: block; color: white; font-weight: bold; font-size: 200%; text-decoration: none; }
+		ul li a { text-decoration: none; color: white; font-weight: bold; }
+		ul li sup { font-size: 60%;}
+		ul#projects { left: 0; padding-left: 3%; text-align: left; }
+		ul#websites { right: 0; padding-right: 5%; text-align: right; }
+		 /* Note: these paddings are set dynamically in spiral.js */
+		ul#projects li { padding-bottom: 1px; }
+		ul#websites li { padding-bottom: 1px; }
+		.spotify, .spotify a { position: relative; color: white; font-weight: bold; text-decoration: none;}
+		.bottom-center {
+			position: fixed; /* or absolute */
+			bottom: 0;
+			left: 50%;
+			transform: translateX(-50%);
+			text-align: center;
+			width: 100%;
+			background-color: rgba(10, 10, 10, 0.8); /* optional background */
+			padding: 10px; /* optional padding */
+		}
+		</style>
+	
+	<!-- Must come _after_ the css <style> tag, as it references some of its sections -->
+	<script type="text/javascript" language="javascript" src="./spiral.js"></script>
+</head>
+<body>
+	<!-- <canvas id="roll" width="1255" height="850"></canvas> -->
+	<canvas id="roll"></canvas>
+	<ul id="projects">
+		<li class="title">Projects</li>
+		<li><sup>2025</sup> <a href="./projects/gocardless">GoCardless to Excel</a></li>
+		<li><sup>2024</sup> <a href="https://www.youtube.com/watch?v=2VlFrnLMu7g">Shotcut Video Editing</a></li>
+		<li><sup>2022</sup> <a href="./projects/dispatch">Keep or Delete files</a></li>
+		<li><sup>2012</sup> <a href="./projects/archiver">phpBB Archiver</a></li>
+		<li><sup>2011</sup> <a href="./projects/wiki">.Net Wiki</a></li>
+		<li><sup>2011</sup> <a href="./projects/apidoc">Code Doc Generator</a></li>
+		<li><sup>2011</sup> <a href="./projects/poker">Poker Analyzer</a></li>
+		<li><sup>2004</sup> <a href="./projects/chat">C++ Chat</a></li>
+	</ul>
+	<ul id="websites">
+		<li class="title">Web & Flutter</li>
+		<li><a href="./web/flutter_2025">Flutter Demos 2025</a> <sup>2025</sup></li>
+		<li><a href="./web/flutter_2022">Flutter Demos 2022</a> <sup>2022</sup></li>
+		<li><sup>2018</sup> <a href="./web/particles/particles.htm">Particles</a> — <a href="./web/particles/gravity.htm">Gravity</a></li>
+	</ul>
+	<span class="bottom-center spotify">Spotify — <a href="./spotify/elek.htm">Elek</a> + <a href="./spotify/poppins.htm">Poppins</a> + <a href="./spotify/rocky.htm">Rocky</a></span>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Kalex</title>
+	<meta charset="UTF-8"> 
+	<script type="text/javascript" language="javascript" src="./js/jquery-latest.min.js"></script>
+	<script type="text/javascript" language="javascript" src="./js/galaxy.js"></script>
+	<script type="text/javascript" language="javascript" src="./js/particle.js"></script>
+	<script type="text/javascript" language="javascript" src="./js/particles.js"></script>
+	<script type="text/javascript" language="javascript" src="./particles_config.js"></script>
+	<script type="text/javascript" language="javascript">
+
+		// Global variables
+		var particles = [];
+		var linkMaxDistance;	// Calculated according to window size.
+		var attractorMass = config.AttracktorStartingMass;
+		var attractorAngle = 0;
+			
+		$(document).ready(() => { reload(); });
+		$(window).on('resize', function(){ reload(); });
+		$(window).on('click', function(e) { particles.push(Particle.create(config, e.clientX, e.clientY)); });
+		$(window).on('mousemove', function(e) { excludeParticles(canvas, e.clientX, e.clientY);});
+		function reload() {
+			const canvas = $('#canvas')[0];
+			canvas.width = window.innerWidth;
+			canvas.height = window.innerHeight;
+			const context = canvas.getContext('2d');
+			context.lineWidth = config.LineWidth;
+
+			particles = Particle.generate(canvas.width, canvas.height, config);
+			linkMaxDistance = Math.sqrt(Math.pow(canvas.width / config.LinkCanvasRatio, 2) + Math.pow(canvas.height / config.LinkCanvasRatio, 2));
+			
+			window.requestAnimationFrame(function() {draw(canvas, context)});
+		}
+		function draw(canvas, context) {
+			// Clear
+			context.setTransform(1, 0, 0, 1, 0, 0);
+			context.clearRect(0, 0, canvas.width, canvas.height);		
+
+			// Previous O(n³) style:
+			var index = 0;
+			particles.forEach(function(p) {
+				// Draw 1 Particle
+				context.fillStyle = p.grayscale;
+				//context.fillRect(p.x, p.y, p.size, p.size);	// Square			
+				context.beginPath();
+				context.arc(p.x, p.y, p.size, 0, 2*Math.PI);	// Cercle
+				context.fill();
+				
+				// Draw direction vector
+				p.drawVector(context);
+
+				// Draw links between particles
+				drawLinks(context, p, ++index);
+				p.move(canvas.width, canvas.height);
+				// p.moveWithGravity(canvas.width, canvas.height, attractorMass);
+			});
+
+			// 2025.07.09: ChatGPT
+			// drawLinksFast(context, particles, linkMaxDistance);
+
+			// var attractorSize = Math.sqrt(attractorMass);
+			// drawGalaxy(context, canvas, attractorAngle, attractorSize);
+			// attractorAngle += 0.01;
+			// attractorMass += absorb(canvas.width, canvas.height, attractorSize) * config.AttractorGainMultiplier;
+
+			window.requestAnimationFrame(function() {draw(canvas, context)});
+		}
+	</script>
+
+	<style type="text/css">
+		/* Full-page canvas (see https://stackoverflow.com/questions/3707151/make-canvas-fill-the-whole-page#3707579) */
+		* { margin:0; padding: 0; }
+		body, html { height:100%; background-color: #000; }
+		canvas { position:absolute; background-color: #000; }
+	</style>
+
+</head>
+<body>
+	<canvas id="canvas"></canvas>
+</body>
+</html>
